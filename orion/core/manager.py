@@ -1,8 +1,6 @@
 from __future__ import annotations
 from typing import Type, Optional, AbstractSet, Iterable, Hashable, ItemsView, TypeVar
 import logging
-import inspect
-import functools
 
 from orion.events import *
 from orion.core.game import Game
@@ -12,14 +10,11 @@ from orion.core.registry import OrionPluginRegistry, T
 logger = logging.getLogger(__file__)
 
 
-def partial_class(cls, *args, **kwargs):
-
-    class NewCls(cls):
-        __init__ = functools.partialmethod(cls.__init__, *args, **kwargs)
-    return NewCls
-
-
 class OrionManager:
+    """The central manager class that interfaces with the rest of Orion's
+    utilities.
+    """
+
     BOOTED = {}
 
     def __init__(self, root: Optional[Type[Game]] = None) -> None:
@@ -62,7 +57,7 @@ class OrionManager:
             if plugin.__name__ == "GamePlugin":
                 continue
             if hasattr(plugin, "_boot"):
-                _plugin = plugin()
+                _plugin = plugin(self.root)
                 if hasattr(plugin, "is_booted"):
                     _plugin.is_booted = True
                 else:

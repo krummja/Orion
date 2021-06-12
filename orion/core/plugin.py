@@ -1,10 +1,11 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from orion.core.registry import OrionPluginRegistry
 from orion.events import BOOT, READY, START
-from inspect import Parameter, Signature
 
-
-def make_signature(names):
-    return Signature([Parameter(name, Parameter.POSITIONAL_OR_KEYWORD) for name in names])
+if TYPE_CHECKING:
+    from orion.core.game import Game
 
 
 class OrionPlugin(metaclass=OrionPluginRegistry):
@@ -18,6 +19,9 @@ class OrionPlugin(metaclass=OrionPluginRegistry):
 class GamePlugin(OrionPlugin):
 
     is_booted: bool = False
+
+    def __init__(self, root: Game) -> None:
+        self.root = root
 
     def _boot(self):
         self.boot()

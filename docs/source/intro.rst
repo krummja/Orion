@@ -12,9 +12,9 @@ Install the latest release from PyPi using pip with:
 
 .. code-block:: console
 
-    pip install pygame_orion -U
+    pip install pygame-orion -U
 
-You can also build the latest version `from Github here <https://www.github.com/krummja/pygame_orion>`_ by downloading the source, navigating to the project's directory (which contains ``setup.py``) and building with:
+You can also build the latest version `from Github here <https://www.github.com/krummja/orion>`_ by downloading the source, navigating to the project's directory (which contains ``setup.py``) and building with:
 
 .. code-block:: console
 
@@ -24,7 +24,7 @@ You can also build the latest version `from Github here <https://www.github.com/
 Source Code on Github
 ---------------------
 
-The source code is `available from Github here <https://www.github.com/krummja/pygame_orion>`_.
+The source code is `available from Github here <https://www.github.com/krummja/orion>`_.
 
 Quick Start Guide
 -----------------

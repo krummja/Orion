@@ -3,15 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pygame_orion's documentation!
-========================================
+Welcome to Orion
+================
+
+.. image:: orion_transparent.svg
+   :width: 1456
+   :alt: Orion logo
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    intro
-   contributing
+   plugins
+   plugin_manager
+   game_loop
+   events
+   using_plugins
 
 Indices and tables
 ==================
