@@ -1,10 +1,16 @@
+from __future__ import annotations
 from typing import Any, Dict, Optional
 
+import logging
+import pygame as pg
+
+from orion.core.events import EventEmitter
 from orion.core.config import OrionConfig
-from orion.core.manager import logger
-from orion.core.orion_plugin import OrionPlugin
-from orion.core.registry import OrionPluginRegistry
 from orion.events import BOOT, POST_RENDER, POST_STEP, PRE_RENDER, PRE_STEP, READY, START, STEP, STOP, TEARDOWN
+import orion._logging as log
+
+
+logger = logging.getLogger(__file__)
 
 
 class TimeStep:
@@ -62,35 +68,25 @@ class TimeStep:
         self.tick()
 
 
-class Game(OrionPlugin):
+class Game:
 
     def __init__(
             self,
             options: Optional[Dict[str, Any]] = None,
             config_path: Optional[str] = None,
         ) -> None:
-        """The core client object that serves as the central interface
-        with the rest of the framework.
-
-        Different packages that provide certain kinds of functionality
-        can be dropped into this basic class like plugins.
-
-        Access plugins using the `OrionPluginRegistry.plugins()` classmethod.
-        Register them by extending the `OrionPlugin` class.
-
-        Access plugins by key using the registry's `get_plugin` method, e.g.
-            plugin = OrionPluginRegistry.get_plugin("MyPlugin")
-        """
         self.config = OrionConfig(options, config_path)
         self.loop = TimeStep(self)
+        self.events = EventEmitter()
 
         self._is_booted = False
         self._is_running = False
         self._pending_teardown = False
         self._remove_display = False
 
+        self.events.on(READY, self.start)
+
     def boot(self):
-        OrionPluginRegistry.add_booted(self)
         logger.info("BOOT")
         self._is_booted = True
         self.events.emit(BOOT)

@@ -1,16 +1,31 @@
 from __future__ import annotations
-from typing import Tuple, List
-import pygame as pg
-import orion as orion
-import orion.plugins.game
+
+import orion
+import dev2
 
 
-class Game(orion.plugins.game.Game):
+class TestPlugin(orion.GamePlugin):
 
-    def __init__(self):
-        super().__init__()
+    def boot(self):
+        print("Foo!")
+
+    def ready(self):
+        pass
+
+    def start(self):
+        pass
+
+
+class TestPlugin2(orion.OrionPlugin):
+
+    def _boot(self):
+        print("Bar!")
+
+
+class TestGame(orion.Game):
+    pass
 
 
 if __name__ == '__main__':
-    game = Game()
-    game.boot()
+    manager = orion.OrionManager(TestGame)
+    manager.boot()

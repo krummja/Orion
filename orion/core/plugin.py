@@ -1,13 +1,23 @@
 from orion.core.registry import OrionPluginRegistry
 from orion.events import BOOT, READY, START
+from inspect import Parameter, Signature
 
 
-class OrionPlugin(metaclass= OrionPluginRegistry):
+def make_signature(names):
+    return Signature([Parameter(name, Parameter.POSITIONAL_OR_KEYWORD) for name in names])
+
+
+class OrionPlugin(metaclass=OrionPluginRegistry):
     """Base class for registering plugins to the Orion framework.
 
     All OrionPlugins come equipped with an EventEmitter to handle
     inter-plugin communications.
     """
+
+
+class GamePlugin(OrionPlugin):
+
+    is_booted: bool = False
 
     def _boot(self):
         self.boot()
